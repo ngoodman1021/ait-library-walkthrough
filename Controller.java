@@ -42,6 +42,10 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
   
   try {
     switch (action) {
+	    case "/add":
+      case "/edit":
+	      showEditForm(request, response);
+	    	break;
       case "/update":
         updateBook(request, response);
         break;
@@ -53,7 +57,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throw new ServletException(e);
   }
 }
-  
  private void updateBook(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException
 {	
