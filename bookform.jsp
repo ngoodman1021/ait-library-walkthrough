@@ -53,7 +53,13 @@
           </label>
           <label>
             # of Copies
-            <input type="text" name="copies" />
+            <select name="copies">
+          <c:forEach begin="1" end="15" varStatus="loop">
+    <option value="${loop.index}" <c:if test="${book.copies == loop.index}">selected</c:if>>
+      ${loop.index}
+    </option>
+  </c:forEach>
+</select>
           </label>
           <input type="submit" value="Add" name="submit" />
         </form>
