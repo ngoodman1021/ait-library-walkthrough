@@ -57,6 +57,19 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throw new ServletException(e);
   }
 }
+private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, ServletException, IOException
+{
+  try {
+    final int id = Integer.parseInt(request.getParameter("id"));
+    
+    Book book = dao.getBook(id);
+    request.setAttribute("book", book);
+  } finally {
+    RequestDispatcher dispatcher = request.getRequestDispatcher("bookform.jsp");
+    dispatcher.forward(request, response);
+  }
+}
  private void updateBook(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException
 {	
