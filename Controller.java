@@ -34,29 +34,44 @@ public class Controller extends HttpServlet
     doGet(request, response);
   }
   
-  @Override
+@Override
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
 {
   final String action = request.getServletPath();
-  
+	
   try {
     switch (action) {
-	    case "/add":
+      case "/add":
       case "/edit":
-	      showEditForm(request, response);
-	    	break;
+        showEditForm(request, response);
+        break;
+      case "/insert":
+        insertBook(request, response);
+        break;
       case "/update":
         updateBook(request, response);
         break;
       default:
         viewBooks(request, response);
         break;
-    }
+    }   
   } catch (SQLException e) {
     throw new ServletException(e);
   }
 }
+
+private void insertBook(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, ServletException, IOException
+{
+  String title = request.getParameter("title");
+  String author = request.getParameter("author");
+  int copies = Integer.parseInt(request.getParameter("copies"));
+	
+  dao.insertBook(title, author, copies, copies);
+  response.sendRedirect(request.getContextPath() + "/");
+}
+
 private void showEditForm(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException
 {
