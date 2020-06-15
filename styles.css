@@ -8,7 +8,7 @@ body {
   background-color: ivory;
   font-family: "Montserrat", sans-serif;
   padding-top: 3%;
- text-align: center;
+  text-align: center;
 }
 
 h1 {
@@ -48,6 +48,32 @@ table td:nth-child(5) div {
 table th,
 table td {
   padding: 7px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 40%;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  margin-bottom: 2%;
+  text-align: left;
+}
+
+form input,
+form select {
+  border-radius: 3px;
+  margin-top: 1%;
+  padding: 7px;
+}
+
+h2 {
+  margin-bottom: 1%;
 }
 
 .header {
@@ -90,4 +116,14 @@ table td {
 .button:active {
   background-color: darkgray;
   color: white;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3%;
+}
+
+.form-actions input {
+  width: 45%;
 }
