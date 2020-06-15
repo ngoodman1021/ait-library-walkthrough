@@ -72,10 +72,12 @@ private void showEditForm(HttpServletRequest request, HttpServletResponse respon
 }
  private void updateBook(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException
-{	
-  final String action = request.getParameter("action");
+{
+  final String action = request.getParameter("action") != null
+    ? request.getParameter("action")
+    : request.getParameter("submit").toLowerCase();
   final int id = Integer.parseInt(request.getParameter("id"));
-  
+	
   Book book = dao.getBook(id);
   switch (action) {
     case "rent":
@@ -84,9 +86,30 @@ private void showEditForm(HttpServletRequest request, HttpServletResponse respon
     case "return":
       book.returnMe();
       break;
+    case "save":
+      String title = request.getParameter("title");
+      String author = request.getParameter("author");
+      int copies = Integer.parseInt(request.getParameter("copies"));
+      int available = book.getAvailable() + (copies - book.getCopies());
+		
+      book.setTitle(title);
+      book.setAuthor(author);
+      book.setCopies(copies);
+      book.setAvailable(available);
+      break;
+    case "delete":
+      deleteBook(id, request, response);
+      return;
+    }
+
+    dao.updateBook(book);
+    response.sendRedirect(request.getContextPath() + "/");
   }
-  dao.updateBook(book);
-  
+    
+private void deleteBook(final int id, HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, ServletException, IOException
+{	
+  dao.deleteBook(dao.getBook(id));	
   response.sendRedirect(request.getContextPath() + "/");
 }
  
