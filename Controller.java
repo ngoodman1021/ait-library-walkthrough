@@ -35,23 +35,46 @@ public class Controller extends HttpServlet
   }
   
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException
-  {
-    final String action = request.getServletPath();
-    
-    try {
-      switch (action) {
-        default:
-          viewBooks(request, response);
-          break;
-      }
-    } catch (SQLException e) {
-      throw new ServletException(e);
-    }
-  }
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException
+{
+  final String action = request.getServletPath();
   
-  private void viewBooks(HttpServletRequest request, HttpServletResponse response)
+  try {
+    switch (action) {
+      case "/update":
+        updateBook(request, response);
+        break;
+      default:
+        viewBooks(request, response);
+        break;
+    }
+  } catch (SQLException e) {
+    throw new ServletException(e);
+  }
+}
+  
+ private void updateBook(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, ServletException, IOException
+{	
+  final String action = request.getParameter("action");
+  final int id = Integer.parseInt(request.getParameter("id"));
+  
+  Book book = dao.getBook(id);
+  switch (action) {
+    case "rent":
+      book.rentMe();
+      break;
+    case "return":
+      book.returnMe();
+      break;
+  }
+  dao.updateBook(book);
+  
+  response.sendRedirect(request.getContextPath() + "/");
+}
+ 
+ private void viewBooks(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException
   {
     List<Book> books = dao.getBooks();
