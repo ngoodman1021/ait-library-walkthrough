@@ -6,22 +6,28 @@
   <head>
     <meta charset="UTF-8">
     <title>AIT Library</title>
+    
+    <style type="text/css">
+      <%@ include file="css/styles.css" %>
+    </style>
   </head>
   <body>
     <div>
       <h1>Inventory Management</h1>
-      <a href="${pageContext.request.contextPath}/">VIEW ALL</a>
-      <a href="${pageContext.request.contextPath}/add">ADD A BOOK</a> 
+      
+      <div class="header">
+        <a href="${pageContext.request.contextPath}/" class="header-button">VIEW ALL</a>
+        <a href="${pageContext.request.contextPath}/add" class="header-button">ADD A BOOK</a> 
+      </div>
     </div>
     <div>
-      <table border="1">
-        <caption>All Books in Collection</caption>
-        
+      <table border="1">        
         <tr>
-          <td>Title</td>
-          <td>Author</td>
-          <td>Copies</td>
-          <td>Available</td>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Copies</th>
+          <th>Available</th>
+          <th>Actions</th>
         </tr>
         <c:forEach var="book" items="${books}">
           <tr>
@@ -29,39 +35,28 @@
             <td><c:out value="${book.author}" /></td>
             <td><c:out value="${book.copies}" /></td>
             <td><c:out value="${book.available}" /></td>
+            <td>
+	      <div>
+	        <a href="${pageContext.request.contextPath}/update?action=rent&id=${book.id}"
+            	   class="button"
+                >
+              	  RENT
+              	</a>
+              	<a href="${pageContext.request.contextPath}/update?action=return&id=${book.id}"
+              	   class="button"
+              	>
+              	  RETURN
+              	</a>
+              	<a href="${pageContext.request.contextPath}/edit?id=${book.id}"
+              	   class="button"
+              	>
+              	  EDIT
+              	</a>
+              </div>
+            </td>
           </tr>
         </c:forEach>
       </table>
-      <table border="1">
-  <caption>All Books in Collection</caption>
-  
-  <tr>
-    <td>Title</td>
-    <td>Author</td>
-    <td>Copies</td>
-    <td>Available</td>
-    <td>Actions</td>
-  </tr>
-  <c:forEach var="book" items="${books}">
-    <tr>
-      <td><c:out value="${book.title}" /></td>
-      <td><c:out value="${book.author}" /></td>
-      <td><c:out value="${book.copies}" /></td>
-      <td><c:out value="${book.available}" /></td>
-      <td>
-        <a href="${pageContext.request.contextPath}/update?action=rent&id=
-	  <c:out value="${book.id}" />">RENT
-	</a>
-        <a href="${pageContext.request.contextPath}/update?action=return&id=
-	  <c:out value="${book.id}" />">RETURN
-	</a>
-        <a href="${pageContext.request.contextPath}/edit?id=
-	  <c:out value="${book.id}" />">EDIT
-	</a>
-      </td>
-    </tr>
-  </c:forEach>
-</table>
     </div>
   </body>
 </html>
